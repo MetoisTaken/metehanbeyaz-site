@@ -8,7 +8,7 @@ interface Props {
 
 const {
   title,
-  description = 'Metehan Beyaz — Kişisel teknik notlar, projeler, özgeçmiş ve canlı sunucu durumu.',
+  description = 'Metehan Beyaz — Kişisel notlar, projeler ve özgeçmiş.',
 } = Astro.props;
 
 const path = Astro.url.pathname;
@@ -43,7 +43,7 @@ const isActive = (href: string) =>
           <a href="/notlar" class:list={{ active: isActive('/notlar') }}>Notlar</a>
           <a href="/projeler" class:list={{ active: isActive('/projeler') }}>Projeler</a>
           <a href="/cv" class:list={{ active: isActive('/cv') }}>CV</a>
-          <a href="https://status.metehanbeyaz.com" target="_blank" rel="noopener">Durum ↗</a>
+          <a href="https://status.metehanbeyaz.com" target="_blank" rel="noopener">Sunucu Durum ↗</a>
           <button id="theme-toggle" class="theme-btn" type="button" aria-label="Tema değiştir">◐</button>
         </nav>
       </div>
@@ -60,7 +60,7 @@ const isActive = (href: string) =>
           <a href="/notlar">Notlar</a> ·
           <a href="/projeler">Projeler</a> ·
           <a href="/cv">CV</a> ·
-          <a href="https://status.metehanbeyaz.com" target="_blank" rel="noopener">Sunucu Durumu</a>
+          <a href="https://status.metehanbeyaz.com" target="_blank" rel="noopener">Sunucu Durum</a>
         </span>
       </div>
     </footer>

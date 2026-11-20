@@ -2,84 +2,29 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
-<BaseLayout title="CV | Metehan Beyaz" description="Metehan Beyaz — Özgeçmiş, yetkinlikler ve iletişim bilgileri.">
+<BaseLayout title="CV | Metehan Beyaz" description="Metehan Beyaz — Özgeçmiş.">
   <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:1rem; flex-wrap:wrap;">
     <div>
       <h1>Metehan Beyaz</h1>
-      <p class="muted" style="margin:0;">Sistem, Ağ &amp; Yazılım Meraklısı · Türkiye</p>
+      <p class="muted" style="margin:0;">Özgeçmiş</p>
     </div>
     <button class="btn no-print" type="button" onclick="window.print()">PDF / Yazdır</button>
   </div>
 
   <section>
-    <h2>Özet</h2>
-    <p>
-      Linux sunucu yönetimi, sanallaştırma (Proxmox VE / KVM / LXC), ağ güvenliği (WireGuard, nftables, ters vekil)
-      ve kendi kendine yeten yüksek verimli sistemler tasarlama üzerine çalışan teknoloji meraklısı.
-      Bu sayfayı <code>src/pages/cv.astro</code> dosyasından dilediğin gibi güncelleyebilirsin.
-    </p>
+    <h2>Hakkımda</h2>
+    <div class="card muted">Yakında güncellenecek.</div>
   </section>
 
   <section>
-    <h2>Teknik Yetkinlikler</h2>
-    <div class="grid-2">
-      <div class="card">
-        <h3>Sistem &amp; Sanallaştırma</h3>
-        <p class="muted" style="margin:0;">
-          Proxmox VE, KVM/QEMU, LXC, Debian Linux, systemd, LVM-Thin, CPU Pinning, Intel SR-IOV Passthrough
-        </p>
-      </div>
-      <div class="card">
-        <h3>Ağ &amp; Güvenlik</h3>
-        <p class="muted" style="margin:0;">
-          WireGuard VPN, nftables / NAT / DMZ izolasyonu, Cloudflare DNS &amp; Tunnels, Nginx Proxy Manager, SSH Hardening
-        </p>
-      </div>
-      <div class="card">
-        <h3>Otomasyon &amp; Betik</h3>
-        <p class="muted" style="margin:0;">
-          Bash, Python, Git, Cloudflare Pages, Astro, temel Docker / konteyner yönetimi
-        </p>
-      </div>
-      <div class="card">
-        <h3>İzleme &amp; Medya/Oyun</h3>
-        <p class="muted" style="margin:0;">
-          Gatus, Valve Dedicated Server (CS2 / A2S), Jellyfin VAAPI / FFmpeg optimizasyonu
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <section>
-    <h2>Eğitim &amp; Deneyim</h2>
-    <div class="stack">
-      <div class="card">
-        <div style="display:flex; justify-content:space-between; gap:1rem; flex-wrap:wrap;">
-          <strong>Eğitim / Bölüm Bilgisi (Düzenlenecek)</strong>
-          <span class="post-date">20XX – 20XX</span>
-        </div>
-        <p class="muted" style="margin:0.35rem 0 0;">
-          Üniversite / okul bilgini ve öne çıkan çalışmalarını buraya ekleyebilirsin.
-        </p>
-      </div>
-      <div class="card">
-        <div style="display:flex; justify-content:space-between; gap:1rem; flex-wrap:wrap;">
-          <strong>Kişisel Sunucu &amp; Altyapı Projeleri</strong>
-          <span class="post-date">Devam Ediyor</span>
-        </div>
-        <p class="muted" style="margin:0.35rem 0 0;">
-          Fail-closed WireGuard edge mimarisi, düşük kaynaklı oyun/medya sunucuları ve bağımsız uptime izleme sistemi.
-        </p>
-      </div>
-    </div>
+    <h2>Deneyim &amp; Eğitim</h2>
+    <div class="card muted">Yakında güncellenecek.</div>
   </section>
 
   <section>
     <h2>İletişim</h2>
     <p class="muted">
-      Web: <a href="https://metehanbeyaz.com">metehanbeyaz.com</a> ·
-      Durum: <a href="https://status.metehanbeyaz.com" target="_blank" rel="noopener">status.metehanbeyaz.com</a>
-      <!-- GitHub, LinkedIn veya e-posta adresini buraya ekleyebilirsin -->
+      Web: <a href="https://metehanbeyaz.com">metehanbeyaz.com</a>
     </p>
   </section>
 </BaseLayout>
