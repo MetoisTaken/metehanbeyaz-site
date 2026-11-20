@@ -12,21 +12,26 @@ const projects: Project[] = [];
 ---
 
 <BaseLayout title="Projeler | Metehan Beyaz" description="Projeler.">
-  <h1>Projeler</h1>
+  <div class="page-head">
+    <div>
+      <h1>Projeler</h1>
+      <p class="lead">Üzerinde çalıştığım projeler.</p>
+    </div>
+  </div>
 
-  <div class="stack" style="margin-top:1.5rem;">
+  <div class="stack">
     {projects.length > 0 ? (
       projects.map((p) => (
         <div class="card">
-          <div style="display:flex; justify-content:space-between; align-items:baseline; gap:1rem;">
+          <div class="section-head">
             <h3>{p.name}</h3>
             {p.link && (
-              <a href={p.link} target="_blank" rel="noopener" class="muted" style="font-size:0.84rem;">
+              <a href={p.link} target="_blank" rel="noopener" class="subtle-link">
                 İncele ↗
               </a>
             )}
           </div>
-          <p class="muted" style="margin:0.35rem 0 0;">{p.summary}</p>
+          <p class="muted">{p.summary}</p>
           {p.stack.length > 0 && (
             <div class="tags">
               {p.stack.map((item) => <span class="tag">{item}</span>)}
@@ -35,7 +40,7 @@ const projects: Project[] = [];
         </div>
       ))
     ) : (
-      <div class="card muted">Projeler yakında eklenecek.</div>
+      <div class="empty-card">Projeler yakında eklenecek.</div>
     )}
   </div>
 </BaseLayout>

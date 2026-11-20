@@ -11,94 +11,119 @@ const formatDate = (d: Date) =>
 ---
 
 <BaseLayout title="Metehan Beyaz">
-  <section>
+  <section class="hero">
     <h1>Metehan Beyaz</h1>
     <p class="lead">Notlarım, projelerim ve özgeçmişim.</p>
   </section>
 
-  <section class="card status-card" aria-label="Sunucu Durum">
+  <section class="status-panel" aria-label="Sunucu Durum">
     <div class="status-head">
       <div>
-        <h3 style="margin:0;">Sunucu Durum</h3>
-        <span class="muted" style="font-size:0.82rem;">Metehan's Servers Status</span>
+        <h3>Sunucu Durum</h3>
+        <span class="status-subtitle">Metehan's Servers Status</span>
       </div>
-      <a class="muted" style="font-size:0.84rem;" href="https://status.metehanbeyaz.com" target="_blank" rel="noopener">
+      <a class="subtle-link" href="https://status.metehanbeyaz.com" target="_blank" rel="noopener">
         Detaylar ↗
       </a>
     </div>
 
-    <div id="status-list" class="status-list">
-      <a
-        class="status-row"
-        href="steam://rungameid/730//+connect%20server.metehanbeyaz.com:27015"
-        title="Counter-Strike 2 ile bağlan"
-      >
-        <span class="status-name"><span class="dot"></span>CS2 Retake<span class="status-join">Bağlan ▶</span></span>
-        <span class="status-ms">—</span>
-      </a>
-      <a
-        class="status-row"
-        href="steam://rungameid/730//+connect%20server.metehanbeyaz.com:27016"
-        title="Counter-Strike 2 ile bağlan"
-      >
-        <span class="status-name"><span class="dot"></span>CS2 5v5<span class="status-join">Bağlan ▶</span></span>
-        <span class="status-ms">—</span>
-      </a>
-      <div class="status-row"><span class="status-name"><span class="dot"></span>WireGuard</span><span class="status-ms">—</span></div>
-      <div class="status-row"><span class="status-name"><span class="dot"></span>Jellyfin</span><span class="status-ms">—</span></div>
-      <div class="status-row"><span class="status-name"><span class="dot"></span>Samba</span><span class="status-ms">—</span></div>
+    <div class="status-group">
+      <div class="status-group-label">Oyun Sunucuları</div>
+      <div class="status-grid-2">
+        <a
+          class="status-row"
+          data-key="game-servers_cs2-retake"
+          href="steam://rungameid/730//+connect%20server.metehanbeyaz.com:27015"
+          title="Counter-Strike 2 ile bağlan"
+        >
+          <span class="status-name">
+            <span class="dot"></span>CS2 Retake<span class="status-join">Bağlan ▶</span>
+          </span>
+          <span class="status-ms">—</span>
+        </a>
+        <a
+          class="status-row"
+          data-key="game-servers_cs2-5v5"
+          href="steam://rungameid/730//+connect%20server.metehanbeyaz.com:27016"
+          title="Counter-Strike 2 ile bağlan"
+        >
+          <span class="status-name">
+            <span class="dot"></span>CS2 5v5<span class="status-join">Bağlan ▶</span>
+          </span>
+          <span class="status-ms">—</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="status-group">
+      <div class="status-group-label">Servisler</div>
+      <div class="status-grid-3">
+        <div class="status-row" data-key="services_wireguard">
+          <span class="status-name"><span class="dot"></span>WireGuard</span>
+          <span class="status-ms">—</span>
+        </div>
+        <div class="status-row" data-key="services_jellyfin">
+          <span class="status-name"><span class="dot"></span>Jellyfin</span>
+          <span class="status-ms">—</span>
+        </div>
+        <div class="status-row" data-key="services_samba">
+          <span class="status-name"><span class="dot"></span>Samba</span>
+          <span class="status-ms">—</span>
+        </div>
+      </div>
     </div>
   </section>
 
-  <section>
-    <div style="display:flex; justify-content:space-between; align-items:baseline;">
-      <h2 style="margin-top:0.5rem;">Son Notlar</h2>
-      <a href="/notlar" class="muted">Tümü →</a>
+  <section class="section">
+    <div class="section-head">
+      <h2>Son Notlar</h2>
+      <a href="/notlar" class="subtle-link">Tümü →</a>
     </div>
     {posts.length > 0 ? (
       <div class="stack">
         {posts.map((post) => (
           <a href={`/notlar/${post.id}`} class="post-item">
             <div>
-              <strong>{post.data.title}</strong>
-              <div class="muted" style="font-size:0.86rem; margin-top:0.15rem;">{post.data.description}</div>
+              <div class="post-title">{post.data.title}</div>
+              <div class="post-desc">{post.data.description}</div>
             </div>
             <span class="post-date">{formatDate(post.data.date)}</span>
           </a>
         ))}
       </div>
     ) : (
-      <div class="card muted">Henüz not eklenmedi.</div>
+      <div class="empty-card">Henüz not eklenmedi.</div>
     )}
   </section>
 
   <script is:inline>
     (() => {
-      const list = document.getElementById('status-list');
-      const steamLinks = {
-        'game-servers_cs2-retake': 'steam://rungameid/730//+connect%20server.metehanbeyaz.com:27015',
-        'game-servers_cs2-5v5': 'steam://rungameid/730//+connect%20server.metehanbeyaz.com:27016',
-      };
-
       fetch('/api/status')
         .then((r) => r.json())
         .then((data) => {
-          if (!data || !data.ok || !Array.isArray(data.endpoints) || data.endpoints.length === 0 || !list) {
-            return;
-          }
-          list.innerHTML = data.endpoints
-            .map((ep) => {
-              const cls = ep.up ? 'ok' : 'err';
-              const ms = ep.up && ep.ms != null ? `${ep.ms} ms` : 'Kapalı';
-              const safeName = String(ep.name).replace(/[<>&"]/g, '');
-              const steamHref = steamLinks[ep.key];
-              if (steamHref) {
-                const action = ep.up ? '<span class="status-join">Bağlan ▶</span>' : '';
-                return `<a class="status-row" href="${steamHref}" title="Counter-Strike 2 ile bağlan"><span class="status-name"><span class="dot ${cls}"></span>${safeName}${action}</span><span class="status-ms">${ms}</span></a>`;
-              }
-              return `<div class="status-row"><span class="status-name"><span class="dot ${cls}"></span>${safeName}</span><span class="status-ms">${ms}</span></div>`;
-            })
-            .join('');
+          if (!data || !data.ok || !Array.isArray(data.endpoints)) return;
+          const byKey = new Map(data.endpoints.map((ep) => [ep.key, ep]));
+
+          document.querySelectorAll('.status-row[data-key]').forEach((row) => {
+            const key = row.getAttribute('data-key');
+            const ep = key ? byKey.get(key) : null;
+            if (!ep) return;
+
+            const dot = row.querySelector('.dot');
+            const msEl = row.querySelector('.status-ms');
+            const joinEl = row.querySelector('.status-join');
+
+            if (dot) {
+              dot.classList.remove('ok', 'err');
+              dot.classList.add(ep.up ? 'ok' : 'err');
+            }
+            if (msEl) {
+              msEl.textContent = ep.up && ep.ms != null ? `${ep.ms} ms` : 'Kapalı';
+            }
+            if (joinEl && !ep.up) {
+              joinEl.style.display = 'none';
+            }
+          });
         })
         .catch(() => {});
     })();

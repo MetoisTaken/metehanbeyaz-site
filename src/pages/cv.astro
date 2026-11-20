@@ -3,26 +3,26 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
 <BaseLayout title="CV | Metehan Beyaz" description="Metehan Beyaz — Özgeçmiş.">
-  <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:1rem; flex-wrap:wrap;">
+  <div class="page-head">
     <div>
       <h1>Metehan Beyaz</h1>
-      <p class="muted" style="margin:0;">Özgeçmiş</p>
+      <p class="lead">Özgeçmiş</p>
     </div>
     <button class="btn no-print" type="button" onclick="window.print()">PDF / Yazdır</button>
   </div>
 
-  <section>
-    <h2>Hakkımda</h2>
-    <div class="card muted">Yakında güncellenecek.</div>
+  <section class="section" style="margin-top: 0;">
+    <h2 class="section-title">Hakkımda</h2>
+    <div class="empty-card">Yakında güncellenecek.</div>
   </section>
 
-  <section>
-    <h2>Deneyim &amp; Eğitim</h2>
-    <div class="card muted">Yakında güncellenecek.</div>
+  <section class="section">
+    <h2 class="section-title">Deneyim &amp; Eğitim</h2>
+    <div class="empty-card">Yakında güncellenecek.</div>
   </section>
 
-  <section>
-    <h2>İletişim</h2>
+  <section class="section">
+    <h2 class="section-title">İletişim</h2>
     <p class="muted">
       Web: <a href="https://metehanbeyaz.com">metehanbeyaz.com</a>
     </p>

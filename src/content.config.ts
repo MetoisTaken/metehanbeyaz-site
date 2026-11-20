@@ -2,7 +2,7 @@ import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
 
 const notlar = defineCollection({
-  loader: glob({ pattern: '[^_]*.md', base: './src/content/notlar' }),
+  loader: glob({ pattern: '**/*.md', base: './src/content/notlar' }),
   schema: z.object({
     title: z.string(),
     description: z.string(),
