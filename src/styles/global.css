@@ -13,7 +13,7 @@
   --err: #f87171;
   --err-soft: rgba(248, 113, 113, 0.14);
   --radius: 10px;
-  --max-w: 760px;
+  --max-w: 920px;
   --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace;
 }
@@ -282,8 +282,8 @@ p {
 
 .status-list {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 0.55rem;
+  grid-template-columns: repeat(auto-fit, minmax(265px, 1fr));
+  gap: 0.65rem;
 }
 
 .status-row {
@@ -314,6 +314,7 @@ a.status-row:hover {
   align-items: center;
   gap: 0.5rem;
   min-width: 0;
+  white-space: nowrap;
 }
 
 .status-ms {
