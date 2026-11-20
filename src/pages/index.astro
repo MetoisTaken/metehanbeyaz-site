@@ -22,15 +22,28 @@ const formatDate = (d: Date) =>
         <h3 style="margin:0;">Sunucu Durum</h3>
         <span class="muted" style="font-size:0.82rem;">Metehan's Servers Status</span>
       </div>
-      <a id="overall-pill" class="status-pill" href="https://status.metehanbeyaz.com" target="_blank" rel="noopener">
-        <span id="overall-dot" class="dot"></span>
-        <span id="overall-text">Kontrol ediliyor…</span>
+      <a class="muted" style="font-size:0.84rem;" href="https://status.metehanbeyaz.com" target="_blank" rel="noopener">
+        Detaylar ↗
       </a>
     </div>
 
     <div id="status-list" class="status-list">
-      <div class="status-row"><span class="status-name"><span class="dot"></span>CS2 Retake</span><span class="status-ms">—</span></div>
-      <div class="status-row"><span class="status-name"><span class="dot"></span>CS2 5v5</span><span class="status-ms">—</span></div>
+      <a
+        class="status-row"
+        href="steam://rungameid/730//+connect%20server.metehanbeyaz.com:27015"
+        title="Counter-Strike 2 ile bağlan"
+      >
+        <span class="status-name"><span class="dot"></span>CS2 Retake</span>
+        <span class="status-ms">Bağlan ▶</span>
+      </a>
+      <a
+        class="status-row"
+        href="steam://rungameid/730//+connect%20server.metehanbeyaz.com:27016"
+        title="Counter-Strike 2 ile bağlan"
+      >
+        <span class="status-name"><span class="dot"></span>CS2 5v5</span>
+        <span class="status-ms">Bağlan ▶</span>
+      </a>
       <div class="status-row"><span class="status-name"><span class="dot"></span>WireGuard</span><span class="status-ms">—</span></div>
       <div class="status-row"><span class="status-name"><span class="dot"></span>Jellyfin</span><span class="status-ms">—</span></div>
       <div class="status-row"><span class="status-name"><span class="dot"></span>Samba</span><span class="status-ms">—</span></div>
@@ -61,37 +74,33 @@ const formatDate = (d: Date) =>
 
   <script is:inline>
     (() => {
-      const pill = document.getElementById('overall-pill');
-      const dot = document.getElementById('overall-dot');
-      const label = document.getElementById('overall-text');
       const list = document.getElementById('status-list');
+      const steamLinks = {
+        'game-servers_cs2-retake': 'steam://rungameid/730//+connect%20server.metehanbeyaz.com:27015',
+        'game-servers_cs2-5v5': 'steam://rungameid/730//+connect%20server.metehanbeyaz.com:27016',
+      };
 
       fetch('/api/status')
         .then((r) => r.json())
         .then((data) => {
-          if (!data || !data.ok || !Array.isArray(data.endpoints) || data.endpoints.length === 0) {
-            if (label) label.textContent = 'Sunucu Durum →';
+          if (!data || !data.ok || !Array.isArray(data.endpoints) || data.endpoints.length === 0 || !list) {
             return;
           }
-          if (pill && dot && label) {
-            pill.classList.add(data.allUp ? 'ok' : 'err');
-            dot.classList.add(data.allUp ? 'ok' : 'err');
-            label.textContent = data.allUp ? 'Tüm sistemler aktif' : 'Kesinti algılandı';
-          }
-          if (list) {
-            list.innerHTML = data.endpoints
-              .map((ep) => {
-                const cls = ep.up ? 'ok' : 'err';
-                const ms = ep.up && ep.ms != null ? `${ep.ms} ms` : 'Kapalı';
-                const safeName = String(ep.name).replace(/[<>&"]/g, '');
-                return `<div class="status-row"><span class="status-name"><span class="dot ${cls}"></span>${safeName}</span><span class="status-ms">${ms}</span></div>`;
-              })
-              .join('');
-          }
+          list.innerHTML = data.endpoints
+            .map((ep) => {
+              const cls = ep.up ? 'ok' : 'err';
+              const ms = ep.up && ep.ms != null ? `${ep.ms} ms` : 'Kapalı';
+              const safeName = String(ep.name).replace(/[<>&"]/g, '');
+              const steamHref = steamLinks[ep.key];
+              if (steamHref) {
+                const action = ep.up ? '<span class="status-join">Bağlan ▶</span>' : '';
+                return `<a class="status-row" href="${steamHref}" title="Counter-Strike 2 ile bağlan"><span class="status-name"><span class="dot ${cls}"></span>${safeName}</span><span class="status-ms">${ms}${action}</span></a>`;
+              }
+              return `<div class="status-row"><span class="status-name"><span class="dot ${cls}"></span>${safeName}</span><span class="status-ms">${ms}</span></div>`;
+            })
+            .join('');
         })
-        .catch(() => {
-          if (label) label.textContent = 'Sunucu Durum →';
-        });
+        .catch(() => {});
     })();
   </script>
 </BaseLayout>

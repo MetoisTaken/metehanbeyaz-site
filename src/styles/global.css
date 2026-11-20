@@ -295,6 +295,25 @@ p {
   border-radius: 8px;
   border: 1px solid var(--border);
   font-size: 0.86rem;
+  color: var(--text);
+}
+
+a.status-row {
+  transition: border-color 0.15s, background 0.15s;
+  cursor: pointer;
+}
+
+a.status-row:hover {
+  text-decoration: none;
+  border-color: var(--accent);
+  background: var(--surface-hover);
+}
+
+.status-join {
+  font-size: 0.74rem;
+  font-family: var(--font-mono);
+  color: var(--accent);
+  margin-left: 0.35rem;
 }
 
 .status-name {
