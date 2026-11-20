@@ -309,23 +309,30 @@ a.status-row:hover {
   background: var(--surface-hover);
 }
 
-.status-join {
-  font-size: 0.74rem;
-  font-family: var(--font-mono);
-  color: var(--accent);
-  margin-left: 0.35rem;
-}
-
 .status-name {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  min-width: 0;
 }
 
 .status-ms {
   font-family: var(--font-mono);
   font-size: 0.78rem;
   color: var(--muted);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.status-join {
+  font-size: 0.7rem;
+  font-family: var(--font-mono);
+  color: var(--accent);
+  background: var(--accent-soft);
+  padding: 0.08rem 0.42rem;
+  border-radius: 5px;
+  white-space: nowrap;
 }
 
 /* Markdown Prose */

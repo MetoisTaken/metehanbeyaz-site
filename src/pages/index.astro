@@ -33,16 +33,16 @@ const formatDate = (d: Date) =>
         href="steam://rungameid/730//+connect%20server.metehanbeyaz.com:27015"
         title="Counter-Strike 2 ile bağlan"
       >
-        <span class="status-name"><span class="dot"></span>CS2 Retake</span>
-        <span class="status-ms">Bağlan ▶</span>
+        <span class="status-name"><span class="dot"></span>CS2 Retake<span class="status-join">Bağlan ▶</span></span>
+        <span class="status-ms">—</span>
       </a>
       <a
         class="status-row"
         href="steam://rungameid/730//+connect%20server.metehanbeyaz.com:27016"
         title="Counter-Strike 2 ile bağlan"
       >
-        <span class="status-name"><span class="dot"></span>CS2 5v5</span>
-        <span class="status-ms">Bağlan ▶</span>
+        <span class="status-name"><span class="dot"></span>CS2 5v5<span class="status-join">Bağlan ▶</span></span>
+        <span class="status-ms">—</span>
       </a>
       <div class="status-row"><span class="status-name"><span class="dot"></span>WireGuard</span><span class="status-ms">—</span></div>
       <div class="status-row"><span class="status-name"><span class="dot"></span>Jellyfin</span><span class="status-ms">—</span></div>
@@ -94,7 +94,7 @@ const formatDate = (d: Date) =>
               const steamHref = steamLinks[ep.key];
               if (steamHref) {
                 const action = ep.up ? '<span class="status-join">Bağlan ▶</span>' : '';
-                return `<a class="status-row" href="${steamHref}" title="Counter-Strike 2 ile bağlan"><span class="status-name"><span class="dot ${cls}"></span>${safeName}</span><span class="status-ms">${ms}${action}</span></a>`;
+                return `<a class="status-row" href="${steamHref}" title="Counter-Strike 2 ile bağlan"><span class="status-name"><span class="dot ${cls}"></span>${safeName}${action}</span><span class="status-ms">${ms}</span></a>`;
               }
               return `<div class="status-row"><span class="status-name"><span class="dot ${cls}"></span>${safeName}</span><span class="status-ms">${ms}</span></div>`;
             })
