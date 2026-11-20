@@ -1,0 +1,57 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const projects = [
+  {
+    name: 'İzole Sanallaştırma & WireGuard Geçidi',
+    summary:
+      'Sanallaştırma düğümündeki servisleri izole DMZ ağı, fail-closed WireGuard tüneli ve modüler nftables kurallarıyla yöneten düşük gecikmeli kişisel sunucu mimarisi.',
+    stack: ['Proxmox VE', 'WireGuard', 'nftables', 'Debian', 'Reverse Proxy'],
+  },
+  {
+    name: 'CS2 Retake & Ready Up 5v5 Sunucuları',
+    summary:
+      'Performans çekirdeklerine sabitlenmiş KVM sanal makineleri üzerinde Retake (CounterStrikeSharp) ve native C++ Auto-Tournament Ready Up 5v5 sunucuları. Valve API + A2S tabanlı otomatik güncelleme sistemi dahil.',
+    stack: ['CS2 Dedicated', 'KVM', 'Ready Up', 'CounterStrikeSharp', 'Python'],
+  },
+  {
+    name: 'Intel UHD 770 SR-IOV Jellyfin Medya Sunucusu',
+    summary:
+      'LXC içerisine SR-IOV sanal GPU (VF) passthrough ile donanım hızlandırmalı VAAPI dönüştürme, throttling ve otomatik Türkçe SRT altyazı sistemi.',
+    stack: ['Jellyfin', 'LXC', 'Intel SR-IOV', 'VAAPI', 'FFmpeg'],
+  },
+  {
+    name: "Metehan's Servers Status",
+    summary:
+      '~32 MB RAM tüketimiyle çalışan tek binary Go durum izleme sistemi; WireGuard, canlı Valve A2S_INFO oyun sunucusu ve servis sağlık kontrolleri.',
+    stack: ['Gatus', 'Go', 'systemd', 'A2S'],
+    link: 'https://status.metehanbeyaz.com',
+  },
+];
+---
+
+<BaseLayout title="Projeler | Metehan Beyaz" description="Geliştirdiğim ve işlettiğim altyapı, sunucu ve yazılım projeleri.">
+  <h1>Projeler</h1>
+  <p class="lead">
+    Kendi altyapımda aktif olarak çalıştırdığım sistemler ve üzerinde uğraştığım teknik projeler.
+  </p>
+
+  <div class="stack" style="margin-top:1.5rem;">
+    {projects.map((p) => (
+      <div class="card">
+        <div style="display:flex; justify-content:space-between; align-items:baseline; gap:1rem;">
+          <h3>{p.name}</h3>
+          {p.link && (
+            <a href={p.link} target="_blank" rel="noopener" class="muted" style="font-size:0.84rem;">
+              Canlı ↗
+            </a>
+          )}
+        </div>
+        <p class="muted" style="margin:0.35rem 0 0;">{p.summary}</p>
+        <div class="tags">
+          {p.stack.map((item) => <span class="tag">{item}</span>)}
+        </div>
+      </div>
+    ))}
+  </div>
+</BaseLayout>

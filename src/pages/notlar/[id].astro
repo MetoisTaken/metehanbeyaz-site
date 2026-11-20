@@ -1,0 +1,39 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('notlar', ({ data }) => !data.draft);
+  return posts.map((post) => ({
+    params: { id: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+const formattedDate = post.data.date.toLocaleDateString('tr-TR', {
+  year: 'numeric',
+  month: 'long',
+  day: '2-digit',
+});
+---
+
+<BaseLayout title={`${post.data.title} | Metehan Beyaz`} description={post.data.description}>
+  <article>
+    <a href="/notlar" class="muted" style="font-size:0.86rem;">← Tüm notlar</a>
+    <h1 style="margin-top:0.75rem;">{post.data.title}</h1>
+    <div class="muted" style="font-family:var(--font-mono); font-size:0.84rem;">
+      {formattedDate}
+    </div>
+    {post.data.tags.length > 0 && (
+      <div class="tags" style="margin-top:0.65rem;">
+        {post.data.tags.map((t) => <span class="tag">{t}</span>)}
+      </div>
+    )}
+
+    <div class="prose">
+      <Content />
+    </div>
+  </article>
+</BaseLayout>

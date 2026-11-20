@@ -1,0 +1,127 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const posts = (await getCollection('notlar', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 5);
+
+const formatDate = (d: Date) =>
+  d.toLocaleDateString('tr-TR', { year: 'numeric', month: 'short', day: '2-digit' });
+---
+
+<BaseLayout title="Metehan Beyaz">
+  <section>
+    <h1>Metehan Beyaz</h1>
+    <p class="lead">
+      Kişisel teknik notlarım, sunucu ve yazılım deneylerim, projelerim ve özgeçmişim.
+      Gösterişten uzak, sade ve hızlı bir kişisel kayıt defteri.
+    </p>
+  </section>
+
+  <section class="card status-card" aria-label="Metehan's Servers Status">
+    <div class="status-head">
+      <div>
+        <h3 style="margin:0;">Metehan's Servers Status</h3>
+        <span class="muted" style="font-size:0.82rem;">Canlı servis durumu</span>
+      </div>
+      <a id="overall-pill" class="status-pill" href="https://status.metehanbeyaz.com" target="_blank" rel="noopener">
+        <span id="overall-dot" class="dot"></span>
+        <span id="overall-text">Kontrol ediliyor…</span>
+      </a>
+    </div>
+
+    <div id="status-list" class="status-list">
+      <div class="status-row"><span class="status-name"><span class="dot"></span>CS2 Retake</span><span class="status-ms">—</span></div>
+      <div class="status-row"><span class="status-name"><span class="dot"></span>CS2 5v5</span><span class="status-ms">—</span></div>
+      <div class="status-row"><span class="status-name"><span class="dot"></span>WireGuard</span><span class="status-ms">—</span></div>
+      <div class="status-row"><span class="status-name"><span class="dot"></span>Jellyfin</span><span class="status-ms">—</span></div>
+      <div class="status-row"><span class="status-name"><span class="dot"></span>Samba</span><span class="status-ms">—</span></div>
+    </div>
+  </section>
+
+  <section>
+    <div style="display:flex; justify-content:space-between; align-items:baseline;">
+      <h2 style="margin-top:0.5rem;">Son Notlar</h2>
+      <a href="/notlar" class="muted">Tümünü gör →</a>
+    </div>
+    <div class="stack">
+      {posts.map((post) => (
+        <a href={`/notlar/${post.id}`} class="post-item">
+          <div>
+            <strong>{post.data.title}</strong>
+            <div class="muted" style="font-size:0.86rem; margin-top:0.15rem;">{post.data.description}</div>
+          </div>
+          <span class="post-date">{formatDate(post.data.date)}</span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section>
+    <div style="display:flex; justify-content:space-between; align-items:baseline;">
+      <h2>Öne Çıkan Projeler</h2>
+      <a href="/projeler" class="muted">Hepsi →</a>
+    </div>
+    <div class="grid-2">
+      <div class="card">
+        <h3>İzole Sanallaştırma &amp; Ağ Geçidi</h3>
+        <p class="muted" style="margin:0;">
+          Fail-closed WireGuard tüneli, izole servis ağı ve nftables yönlendirme mimarisi.
+        </p>
+        <div class="tags">
+          <span class="tag">Proxmox</span>
+          <span class="tag">WireGuard</span>
+          <span class="tag">nftables</span>
+        </div>
+      </div>
+      <div class="card">
+        <h3>CS2 Retake &amp; Ready Up 5v5</h3>
+        <p class="muted" style="margin:0;">
+          P-Core pinli KVM sunucuları, otomatik Valve güncelleme denetimi ve native C++ Ready Up maç akışı.
+        </p>
+        <div class="tags">
+          <span class="tag">CS2</span>
+          <span class="tag">Linux KVM</span>
+          <span class="tag">Ready Up</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script is:inline>
+    (() => {
+      const pill = document.getElementById('overall-pill');
+      const dot = document.getElementById('overall-dot');
+      const label = document.getElementById('overall-text');
+      const list = document.getElementById('status-list');
+
+      fetch('/api/status')
+        .then((r) => r.json())
+        .then((data) => {
+          if (!data || !data.ok || !Array.isArray(data.endpoints) || data.endpoints.length === 0) {
+            if (label) label.textContent = 'Durum sayfası →';
+            return;
+          }
+          if (pill && dot && label) {
+            pill.classList.add(data.allUp ? 'ok' : 'err');
+            dot.classList.add(data.allUp ? 'ok' : 'err');
+            label.textContent = data.allUp ? 'Tüm sistemler aktif' : 'Kesinti algılandı';
+          }
+          if (list) {
+            list.innerHTML = data.endpoints
+              .map((ep) => {
+                const cls = ep.up ? 'ok' : 'err';
+                const ms = ep.up && ep.ms != null ? `${ep.ms} ms` : 'Kapalı';
+                const safeName = String(ep.name).replace(/[<>&"]/g, '');
+                return `<div class="status-row"><span class="status-name"><span class="dot ${cls}"></span>${safeName}</span><span class="status-ms">${ms}</span></div>`;
+              })
+              .join('');
+          }
+        })
+        .catch(() => {
+          if (label) label.textContent = 'Durum sayfası →';
+        });
+    })();
+  </script>
+</BaseLayout>
